@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.statuses.dao.JhiStatusCategoryDao">
+    
+	<sql id="jhiStatusCategoryColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.icon AS "icon"
+	</sql>
+	
+	<sql id="jhiStatusCategoryJoins">
+	</sql>
+    
+	<select id="get" resultType="JhiStatusCategory">
+		SELECT 
+			<include refid="jhiStatusCategoryColumns"/>
+		FROM jhi_status_category a
+		<include refid="jhiStatusCategoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="JhiStatusCategory">
+		SELECT 
+			<include refid="jhiStatusCategoryColumns"/>
+		FROM jhi_status_category a
+		<include refid="jhiStatusCategoryJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="JhiStatusCategory">
+		SELECT 
+			<include refid="jhiStatusCategoryColumns"/>
+		FROM jhi_status_category a
+		<include refid="jhiStatusCategoryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO jhi_status_category(
+			name,
+			icon
+		) VALUES (
+			#{name},
+			#{icon}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE jhi_status_category SET 	
+			name = #{name},
+			icon = #{icon}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM jhi_status_category
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

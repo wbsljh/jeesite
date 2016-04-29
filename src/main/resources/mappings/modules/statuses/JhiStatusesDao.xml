@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.statuses.dao.JhiStatusesDao">
+    
+	<sql id="jhiStatusesColumns">
+		a.id AS "id",
+		a.annotations AS "annotations",
+		a.attacment AS "attacment",
+		a.attitudes_count AS "attitudesCount",
+		a.comments_count AS "commentsCount",
+		a.created_date AS "createdDate",
+		a.middle_pic AS "middlePic",
+		a.original_pic AS "originalPic",
+		a.reposts_count AS "repostsCount",
+		a.source AS "source",
+		a.content AS "content",
+		a.thumbnail_pic AS "thumbnailPic",
+		a.type AS "type",
+		a.category_id AS "category.id",
+		b.name AS "category.name",
+		a.profile_id AS "profileId",
+		a.is_head AS "isHead",
+		a.summary AS "summary",
+		a.tags AS "tags",
+		a.top AS "top",
+		a.title AS "title"
+	</sql>
+	
+	<sql id="jhiStatusesJoins">
+	LEFT JOIN jhi_status_category b on a.category_id = b.id
+	</sql>
+    
+	<select id="get" resultType="JhiStatuses">
+		SELECT 
+			<include refid="jhiStatusesColumns"/>
+		FROM jhi_statuses a
+		<include refid="jhiStatusesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="JhiStatuses">
+		SELECT 
+			<include refid="jhiStatusesColumns"/>
+		FROM jhi_statuses a
+		<include refid="jhiStatusesJoins"/>
+		<where>
+			
+			<if test="source != null and source != ''">
+				AND a.source = #{source}
+			</if>
+			<if test="category != null and category.id != null and category.id != ''">
+				AND a.category_id = #{category.id}
+			</if>
+			<if test="isHead != null and isHead != ''">
+				AND a.is_head = #{isHead}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="JhiStatuses">
+		SELECT 
+			<include refid="jhiStatusesColumns"/>
+		FROM jhi_statuses a
+		<include refid="jhiStatusesJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO jhi_statuses(
+			attacment,
+			created_date,
+			middle_pic,
+			original_pic,
+			source,
+			content,
+			category_id,
+			is_head,
+			summary,
+			tags,
+			top,
+			title
+		) VALUES (
+			#{attacment},
+			#{createdDate},
+			#{middlePic},
+			#{originalPic},
+			#{source},
+			#{content},
+			#{category.id},
+			#{isHead},
+			#{summary},
+			#{tags},
+			#{top},
+			#{title}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE jhi_statuses SET 	
+			attacment = #{attacment},
+			middle_pic = #{middlePic},
+			original_pic = #{originalPic},
+			source = #{source},
+			content = #{content},
+			category_id = #{category.id},
+			is_head = #{isHead},
+			summary = #{summary},
+			tags = #{tags},
+			top = #{top},
+			title = #{title}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM jhi_statuses
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
