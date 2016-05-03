@@ -109,7 +109,7 @@ ${input}ue.addListener('contentChange', function (editor) {
 		$("#${input}Preview").children().remove();
 		for (var i=0; i<urls.length; i++){
 			if (urls[i]!=""){
-				url_i = urls[i];
+				url_i = "${uploadPath}"+urls[i];
 				//<c:if test="${type eq 'thumb' || type eq 'images'}">
 				li = "<li><img src=\""+url_i+"\" url=\""+url_i+"\" style=\"max-width:${empty maxWidth ? 200 : maxWidth}px;max-height:${empty maxHeight ? 200 : maxHeight}px;_height:${empty maxHeight ? 200 : maxHeight}px;border:0;padding:3px;\">";//</c:if><c:if test="${type ne 'thumb' && type ne 'images'}">
 				li = "<li><a href=\""+url_i+"\" url=\""+url_i+"\" target=\"_blank\">"+decodeURIComponent(url_i.substring(url_i.lastIndexOf("/")+1))+"</a>";//</c:if>

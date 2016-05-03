@@ -50,7 +50,7 @@
 			<label class="control-label">首图：</label>
 			<div class="controls">
 				<form:hidden id="originalPic" path="originalPic" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="originalPic" type="images" uploadPath="/statuses/statuses" selectMultiple="false"/>
+				<sys:ckfinder input="originalPic" type="images" uploadPath="${ossPath}" selectMultiple="false"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -76,7 +76,7 @@
 			<label class="control-label">附件：</label>
 			<div class="controls">
 				<form:hidden id="attacment" path="attacment" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="attacment" type="files" uploadPath="/statuses/statuses" selectMultiple="true"/>
+				<sys:ckfinder input="attacment" type="files" uploadPath="${ossPath}" selectMultiple="true"/>
 			</div>
 		</div>
 		<div class="control-group">
