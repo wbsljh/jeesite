@@ -220,6 +220,7 @@ public class JhiStatuses extends DataEntity<JhiStatuses> {
 		// TODO Auto-generated method stub
 		this.setIsNewRecord(true);
 		this.setProfileId(3L);
+		this.setType("0"); //默认为新闻
 		super.preInsert();
 	}
 
