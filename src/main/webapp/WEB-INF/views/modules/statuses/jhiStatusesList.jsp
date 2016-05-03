@@ -31,7 +31,7 @@
 			
 			<li><label>归属栏目：</label>
 				<sys:treeselect id="category" name="category.id" value="${jhiStatuses.category.id}" labelName="category.name" labelValue="${jhiStatuses.category.name}"
-					title="栏目" url="/statuses/jhiStatuses/treeData" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>&nbsp;
+					title="栏目" url="/statuses/jhiStatusCategory/treeData" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>&nbsp;
 			</li>
 			<li><label>是否头条：</label>
 				<form:select path="isHead" class="input-medium">
@@ -77,7 +77,7 @@
 					${jhiStatuses.type}
 				</td>
 				<td>
-					${fns:getDictLabel(jhiStatuses.categoryId, '', '')}
+					${jhiStatuses.category.name}
 				</td>
 				<%-- <td>
 					${jhiStatuses.profileId}

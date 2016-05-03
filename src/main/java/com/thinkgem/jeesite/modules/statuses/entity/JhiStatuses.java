@@ -32,12 +32,12 @@ public class JhiStatuses extends DataEntity<JhiStatuses> {
 	private String originalPic;		// original_pic
 	private String repostsCount;		// reposts_count
 	private String source;		// source
-	private String text;		// text
+	private String content;		// text
 	private String thumbnailPic;		// thumbnail_pic
 	private String type;		// type
 	private JhiStatusCategory category;		// category_id
 	private Long profileId;		// profile_id
-	private String isHead;		// is_head
+	private Boolean isHead;		// is_head
 	private String summary;		// summary
 	private String tags;		// tags
 	private String top;		// top
@@ -132,14 +132,14 @@ public class JhiStatuses extends DataEntity<JhiStatuses> {
 		this.source = source;
 	}
 	
-	public String getText() {
-		return text;
+	public String getContent() {
+		return content;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	
+
 	@Length(min=1, max=255, message="thumbnail_pic长度必须介于 1 和 255 之间")
 	public String getThumbnailPic() {
 		return thumbnailPic;
@@ -166,7 +166,6 @@ public class JhiStatuses extends DataEntity<JhiStatuses> {
 		this.category = category;
 	}
 
-	@NotNull(message="profile_id不能为空")
 	public Long getProfileId() {
 		return profileId;
 	}
@@ -175,12 +174,11 @@ public class JhiStatuses extends DataEntity<JhiStatuses> {
 		this.profileId = profileId;
 	}
 	
-	@Length(min=0, max=1, message="is_head长度必须介于 0 和 1 之间")
-	public String getIsHead() {
+	public Boolean getIsHead() {
 		return isHead;
 	}
 
-	public void setIsHead(String isHead) {
+	public void setIsHead(Boolean isHead) {
 		this.isHead = isHead;
 	}
 	

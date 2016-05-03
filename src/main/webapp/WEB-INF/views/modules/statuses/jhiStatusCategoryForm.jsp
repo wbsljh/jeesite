@@ -43,7 +43,7 @@
 			<label class="control-label">icon：</label>
 			<div class="controls">
 				<form:hidden id="icon" path="icon" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="icon" type="files" uploadPath="/statuses/jhiStatusCategory" selectMultiple="true"/>
+				<sys:ckfinder input="icon" type="images" uploadPath="/statuses/statusCategory" selectMultiple="true"/>
 			</div>
 		</div>
 		<div class="form-actions">

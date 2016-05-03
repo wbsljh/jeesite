@@ -37,7 +37,7 @@
 			<label class="control-label">归属栏目:</label>
 			<div class="controls">
                 <sys:treeselect id="category" name="category.id" value="${jhiStatuses.category.id}" labelName="category.name" labelValue="${jhiStatuses.category.name}"
-					title="栏目" url="/statuses/jhiStatuses/treeData" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>&nbsp;
+					title="栏目" url="/statuses/jhiStatusCategory/treeData" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>&nbsp;
 			</div>
 		</div>
 		<div class="control-group">
@@ -50,7 +50,7 @@
 			<label class="control-label">首图：</label>
 			<div class="controls">
 				<form:hidden id="originalPic" path="originalPic" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="originalPic" type="files" uploadPath="/statuses/jhiStatuses" selectMultiple="true"/>
+				<sys:ckfinder input="originalPic" type="images" uploadPath="/statuses/statuses" selectMultiple="false"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -68,15 +68,15 @@
 		<div class="control-group">
 			<label class="control-label">正文：</label>
 			<div class="controls">
-				<form:textarea id="text" htmlEscape="true" path="text" rows="4" maxlength="200" class="input-xxlarge"/>
-				<sys:ckeditor replace="text" uploadPath="/statuses/jhiStatuses" />
+				<form:textarea id="content" htmlEscape="true" path="content"/>
+				<sys:ckeditor replace="content" uploadPath="/statuses/statuses" />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">附件：</label>
 			<div class="controls">
 				<form:hidden id="attacment" path="attacment" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="attacment" type="files" uploadPath="/statuses/jhiStatuses" selectMultiple="true"/>
+				<sys:ckfinder input="attacment" type="files" uploadPath="/statuses/statuses" selectMultiple="true"/>
 			</div>
 		</div>
 		<div class="control-group">
