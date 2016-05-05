@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.statuses.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,10 @@ public class JhiStatusesService extends CrudService<JhiStatusesDao, JhiStatuses>
 	
 	@Transactional(readOnly = false)
 	public void save(JhiStatuses jhiStatuses) {
+		if (jhiStatuses.getContent()!=null){
+			jhiStatuses.setContent(StringEscapeUtils.unescapeHtml4(
+					jhiStatuses.getContent()));
+		}
 		super.save(jhiStatuses);
 	}
 	

@@ -65,7 +65,9 @@
 		<c:forEach items="${page.list}" var="jhiStatuses">
 			<tr>
 				<td>
-					${jhiStatuses.title}
+					<a href="${ctx}/statuses/jhiStatuses/form?id=${jhiStatuses.id}">
+						${jhiStatuses.title}
+					</a>
 				</td>
 				<td>
 					<fmt:formatDate value="${jhiStatuses.createdDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -91,9 +93,9 @@
 				<td>
 					${fns:getDictLabel(jhiStatuses.top, 'yes_no', '')}
 				</td>
-				<td><a href="${ctx}/statuses/jhiStatuses/form?id=${jhiStatuses.id}">
+				<td>
 					${jhiStatuses.attitudesCount}
-				</a></td>
+				</td>
 				<td>
 					${jhiStatuses.commentsCount}
 				</td>
