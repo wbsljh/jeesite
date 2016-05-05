@@ -23,7 +23,8 @@
 		a.summary AS "summary",
 		a.tags AS "tags",
 		a.top AS "top",
-		a.title AS "title"
+		a.title AS "title",
+		a.publish_date AS "publishDate"
 	</sql>
 	
 	<sql id="jhiStatusesJoins">
@@ -95,7 +96,8 @@
 			tags,
 			top,
 			title,
-			profile_id
+			profile_id,
+			publish_date
 		) VALUES (
 			#{attacment},
 			#{createDate},
@@ -109,7 +111,8 @@
 			#{tags},
 			#{top},
 			#{title},
-			#{profileId}
+			#{profileId},
+			#{publishDate}
 		)
 	</insert>
 	
@@ -125,7 +128,8 @@
 			summary = #{summary},
 			tags = #{tags},
 			top = #{top},
-			title = #{title}
+			title = #{title},
+			publish_date = #{publishDate}
 		WHERE id = #{id}
 	</update>
 	

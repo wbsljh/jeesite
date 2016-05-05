@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.statuses.dao.BannerDao">
+    
+	<sql id="bannerColumns">
+		a.id AS "id",
+		a.href AS "href",
+		a.image AS "image",
+		a.sort AS "sort",
+		a.title AS "title"
+	</sql>
+	
+	<sql id="bannerJoins">
+	</sql>
+    
+	<select id="get" resultType="Banner">
+		SELECT 
+			<include refid="bannerColumns"/>
+		FROM jhi_banner a
+		<include refid="bannerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Banner">
+		SELECT 
+			<include refid="bannerColumns"/>
+		FROM jhi_banner a
+		<include refid="bannerJoins"/>
+		<where>
+			
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Banner">
+		SELECT 
+			<include refid="bannerColumns"/>
+		FROM jhi_banner a
+		<include refid="bannerJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO jhi_banner(
+			href,
+			image,
+			sort,
+			title
+		) VALUES (
+			#{href},
+			#{image},
+			#{sort},
+			#{title}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE jhi_banner SET 	
+			href = #{href},
+			image = #{image},
+			sort = #{sort},
+			title = #{title}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM jhi_banner
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

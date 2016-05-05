@@ -21,7 +21,8 @@
         //          'insertimage','insertvideo','|','preview','searchreplace','FullScreen']],
         toolbars:[['Undo', 'Redo','|','Bold', 'italic', 'underline','strikethrough','removeformat','formatmatch',
                    'forecolor','backcolor','insertorderedlist','insertunorderedlist','|',
-                   'justifyleft','justifyright','justifycenter','justifyjustify','|',
+                   'fontsize','justifyleft','justifyright','justifycenter','justifyjustify','|',
+                   'link', 'unlink', '|',
                    'insertimage','|','preview','searchreplace','FullScreen']],
         
         //关闭字数统计

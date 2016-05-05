@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.statuses.dao.NewsClueDao">
+    
+	<sql id="newsClueColumns">
+		a.id AS "id",
+		a.content AS "content",
+		a.tel AS "tel",
+		a.title AS "title"
+	</sql>
+	
+	<sql id="newsClueJoins">
+	</sql>
+    
+	<select id="get" resultType="NewsClue">
+		SELECT 
+			<include refid="newsClueColumns"/>
+		FROM jhi_news_clue a
+		<include refid="newsClueJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="NewsClue">
+		SELECT 
+			<include refid="newsClueColumns"/>
+		FROM jhi_news_clue a
+		<include refid="newsClueJoins"/>
+		<where>
+			
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="NewsClue">
+		SELECT 
+			<include refid="newsClueColumns"/>
+		FROM jhi_news_clue a
+		<include refid="newsClueJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO jhi_news_clue(
+			content,
+			tel,
+			title
+		) VALUES (
+			#{content},
+			#{tel},
+			#{title}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE jhi_news_clue SET 	
+			content = #{content},
+			tel = #{tel},
+			title = #{title}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM jhi_news_clue
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -79,6 +79,17 @@
 				<sys:ckfinder input="attacment" type="files" uploadPath="${ossPath}" selectMultiple="true"/>
 			</div>
 		</div>
+		
+		<div class="control-group">
+			<label class="control-label">发布日期：</label>
+			<div class="controls">
+				<form:textarea path="summary" htmlEscape="false" rows="4" class="input-xxlarge "/>
+				<input name="publishDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+							value="<fmt:formatDate value="${jhiStatuses.publishDate}" pattern="yyyy-MM-dd"/>"
+							onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+			</div>
+		</div>
+		
 		<div class="control-group">
 			<label class="control-label">是否头条：</label>
 			<div class="controls">

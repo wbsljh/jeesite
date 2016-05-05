@@ -28,6 +28,7 @@ public class JhiStatuses extends DataEntity<JhiStatuses> {
 	private String attitudesCount;		// attitudes_count
 	private String commentsCount;		// comments_count
 	private Date createdDate;		// created_date
+	private Date publishDate;		// publish_date
 	private String middlePic;		// middle_pic
 	private String originalPic;		// original_pic
 	private String repostsCount;		// reposts_count
@@ -96,6 +97,14 @@ public class JhiStatuses extends DataEntity<JhiStatuses> {
 		this.createdDate = createdDate;
 	}
 	
+	public Date getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(Date publishDate) {
+		this.publishDate = publishDate;
+	}
+
 	@Length(min=0, max=255, message="middle_pic长度必须介于 0 和 255 之间")
 	public String getMiddlePic() {
 		return middlePic;
@@ -222,6 +231,9 @@ public class JhiStatuses extends DataEntity<JhiStatuses> {
 		this.setProfileId(3L);
 		this.setType("0"); //默认为新闻
 		super.preInsert();
+		if (this.publishDate == null){
+			this.publishDate = this.createDate;
+		}
 	}
 
 	@Override
