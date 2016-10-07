@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cloudpay.dao.CasInfDao">
+    
+	<sql id="casInfColumns">
+		a.cas_ord_no AS "casOrdNo",
+		a.pay_ord_no AS "payOrdNo",
+		a.cas_type AS "casType",
+		a.cas_date AS "casDate",
+		a.modify_date AS "modifyDate",
+		a.suc_date AS "sucDate",
+		a.ord_status AS "ordStatus",
+		a.tx_ccy AS "txCcy",
+		a.cust_id AS "custId",
+		a.cust_name AS "custName",
+		a.tx_amt AS "txAmt",
+		a.rate AS "rate",
+		a.fee AS "fee",
+		a.service_fee AS "serviceFee",
+		a.netrecamt AS "netrecamt",
+		a.issno AS "issno",
+		a.issnam AS "issnam",
+		a.card_no AS "cardNo",
+		a.province_id AS "province.id",
+		a.cas_desc AS "casDesc",
+		a.audit_status AS "auditStatus",
+		a.audit_desc AS "auditDesc",
+		a.audit_id AS "auditor.id",
+		a.audit_date AS "auditDate",
+		a.cas_channel AS "casChannel",
+		a19.name AS "province.name",
+		u23.name AS "auditor.name"
+	</sql>
+	
+	<sql id="casInfJoins">
+		LEFT JOIN sys_area a19 ON a19.id = a.province_id
+		LEFT JOIN sys_user u23 ON u23.id = a.audit_id
+	</sql>
+    
+	<select id="get" resultType="CasInf">
+		SELECT 
+			<include refid="casInfColumns"/>
+		FROM tb_cas_inf a
+		<include refid="casInfJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CasInf">
+		SELECT 
+			<include refid="casInfColumns"/>
+		FROM tb_cas_inf a
+		<include refid="casInfJoins"/>
+		<where>
+			
+			<if test="casOrdNo != null and casOrdNo != ''">
+				AND a.cas_ord_no = #{casOrdNo}
+			</if>
+			<if test="payOrdNo != null and payOrdNo != ''">
+				AND a.pay_ord_no = #{payOrdNo}
+			</if>
+			<if test="custId != null and custId != ''">
+				AND a.cust_id = #{custId}
+			</if>
+			<if test="custName != null and custName != ''">
+				AND a.cust_name = #{custName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CasInf">
+		SELECT 
+			<include refid="casInfColumns"/>
+		FROM tb_cas_inf a
+		<include refid="casInfJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_cas_inf(
+			cas_ord_no,
+			pay_ord_no,
+			cas_type,
+			cas_date,
+			modify_date,
+			suc_date,
+			ord_status,
+			tx_ccy,
+			cust_id,
+			cust_name,
+			tx_amt,
+			rate,
+			fee,
+			service_fee,
+			netrecamt,
+			issno,
+			issnam,
+			card_no,
+			province_id,
+			cas_desc,
+			audit_status,
+			audit_desc,
+			audit_id,
+			audit_date,
+			cas_channel
+		) VALUES (
+			#{casOrdNo},
+			#{payOrdNo},
+			#{casType},
+			#{casDate},
+			#{modifyDate},
+			#{sucDate},
+			#{ordStatus},
+			#{txCcy},
+			#{custId},
+			#{custName},
+			#{txAmt},
+			#{rate},
+			#{fee},
+			#{serviceFee},
+			#{netrecamt},
+			#{issno},
+			#{issnam},
+			#{cardNo},
+			#{province.id},
+			#{casDesc},
+			#{auditStatus},
+			#{auditDesc},
+			#{auditor.id},
+			#{auditDate},
+			#{casChannel}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_cas_inf SET 	
+			cas_ord_no = #{casOrdNo},
+			pay_ord_no = #{payOrdNo},
+			cas_type = #{casType},
+			cas_date = #{casDate},
+			modify_date = #{modifyDate},
+			suc_date = #{sucDate},
+			ord_status = #{ordStatus},
+			tx_ccy = #{txCcy},
+			cust_id = #{custId},
+			cust_name = #{custName},
+			tx_amt = #{txAmt},
+			rate = #{rate},
+			fee = #{fee},
+			service_fee = #{serviceFee},
+			netrecamt = #{netrecamt},
+			issno = #{issno},
+			issnam = #{issnam},
+			card_no = #{cardNo},
+			province_id = #{province.id},
+			cas_desc = #{casDesc},
+			audit_status = #{auditStatus},
+			audit_desc = #{auditDesc},
+			audit_id = #{auditor.id},
+			audit_date = #{auditDate},
+			cas_channel = #{casChannel}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_cas_inf
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.identity.Group;
+//import org.activiti.engine.IdentityService;
+//import org.activiti.engine.identity.Group;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +65,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		return sessionDao;
 	}
 
-	@Autowired
-	private IdentityService identityService;
+//	@Autowired
+//	private IdentityService identityService;
 
 	//-- User Service --//
 	
@@ -151,7 +151,7 @@ public class SystemService extends BaseService implements InitializingBean {
 				throw new ServiceException(user.getLoginName() + "没有设置角色！");
 			}
 			// 将当前用户同步到Activiti
-			saveActivitiUser(user);
+//			saveActivitiUser(user);
 			// 清除用户缓存
 			UserUtils.clearCache(user);
 //			// 清除权限缓存
@@ -173,7 +173,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	public void deleteUser(User user) {
 		userDao.delete(user);
 		// 同步到Activiti
-		deleteActivitiUser(user);
+//		deleteActivitiUser(user);
 		// 清除用户缓存
 		UserUtils.clearCache(user);
 //		// 清除权限缓存
@@ -266,7 +266,7 @@ public class SystemService extends BaseService implements InitializingBean {
 			role.preInsert();
 			roleDao.insert(role);
 			// 同步到Activiti
-			saveActivitiGroup(role);
+//			saveActivitiGroup(role);
 		}else{
 			role.preUpdate();
 			roleDao.update(role);
@@ -282,7 +282,7 @@ public class SystemService extends BaseService implements InitializingBean {
 			roleDao.insertRoleOffice(role);
 		}
 		// 同步到Activiti
-		saveActivitiGroup(role);
+//		saveActivitiGroup(role);
 		// 清除用户角色缓存
 		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 //		// 清除权限缓存
@@ -293,7 +293,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	public void deleteRole(Role role) {
 		roleDao.delete(role);
 		// 同步到Activiti
-		deleteActivitiGroup(role);
+//		deleteActivitiGroup(role);
 		// 清除用户角色缓存
 		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 //		// 清除权限缓存
@@ -416,7 +416,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * 是需要同步Activiti数据，如果从未同步过，则同步数据。
 	 */
 	private static boolean isSynActivitiIndetity = true;
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() throws Exception {/*
 		if (!Global.isSynActivitiIndetity()){
 			return;
 		}
@@ -440,9 +440,9 @@ public class SystemService extends BaseService implements InitializingBean {
 			 	}
 			}
 		}
-	}
+	*/}
 	
-	private void saveActivitiGroup(Role role) {
+	/*private void saveActivitiGroup(Role role) {
 		if (!Global.isSynActivitiIndetity()){
 			return;
 		}
@@ -538,7 +538,7 @@ public class SystemService extends BaseService implements InitializingBean {
 			String userId = user.getLoginName();//ObjectUtils.toString(user.getId());
 			identityService.deleteUser(userId);
 		}
-	}
+	}*/
 	
 	///////////////// Synchronized to the Activiti end //////////////////
 	

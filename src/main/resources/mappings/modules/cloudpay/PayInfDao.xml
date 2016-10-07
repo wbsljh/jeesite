@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cloudpay.dao.PayInfDao">
+    
+	<sql id="payInfColumns">
+		a.pay_ord_no AS "payOrdNo",
+		a.cust_id AS "custId",
+		a.pay_status AS "payStatus",
+		a.pay_type AS "payType",
+		a.ter_no AS "terNo",
+		a.tx_amt AS "txAmt",
+		a.rate AS "rate",
+		a.rate_type AS "rateType",
+		a.fee AS "fee",
+		a.netrecamt AS "netrecamt",
+		a.pay_channel AS "payChannel",
+		a.pay_card_no AS "payCardNo",
+		a.issnam AS "issnam",
+		a.crdnam AS "crdnam",
+		a.pay_sign_pic AS "paySignPic",
+		a.pay_date AS "payDate",
+		a.pay_ord_time AS "payOrdTime",
+		a.modify_time AS "modifyTime",
+		a.card_media AS "cardMedia",
+		a.serial_no AS "serialNo",
+		a.cas_status AS "casStatus"
+	</sql>
+	
+	<sql id="payInfJoins">
+	</sql>
+    
+	<select id="get" resultType="PayInf">
+		SELECT 
+			<include refid="payInfColumns"/>
+		FROM tb_pay_inf a
+		<include refid="payInfJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PayInf">
+		SELECT 
+			<include refid="payInfColumns"/>
+		FROM tb_pay_inf a
+		<include refid="payInfJoins"/>
+		<where>
+			
+			<if test="payOrdNo != null and payOrdNo != ''">
+				AND a.pay_ord_no = #{payOrdNo}
+			</if>
+			<if test="custId != null and custId != ''">
+				AND a.cust_id = #{custId}
+			</if>
+			<if test="payStatus != null and payStatus != ''">
+				AND a.pay_status = #{payStatus}
+			</if>
+			<if test="payType != null and payType != ''">
+				AND a.pay_type = #{payType}
+			</if>
+			<if test="beginPayDate != null and endPayDate != null and beginPayDate != '' and endPayDate != ''">
+				AND a.pay_date BETWEEN #{beginPayDate} AND #{endPayDate}
+			</if>
+			<if test="serialNo != null and serialNo != ''">
+				AND a.serial_no = #{serialNo}
+			</if>
+			<if test="casStatus != null and casStatus != ''">
+				AND a.cas_status = #{casStatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PayInf">
+		SELECT 
+			<include refid="payInfColumns"/>
+		FROM tb_pay_inf a
+		<include refid="payInfJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_pay_inf(
+			pay_ord_no,
+			cust_id,
+			pay_status,
+			pay_type,
+			ter_no,
+			tx_amt,
+			rate,
+			rate_type,
+			fee,
+			netrecamt,
+			pay_channel,
+			pay_card_no,
+			issnam,
+			crdnam,
+			pay_sign_pic,
+			pay_date,
+			pay_ord_time,
+			modify_time,
+			card_media,
+			serial_no,
+			cas_status
+		) VALUES (
+			#{payOrdNo},
+			#{custId},
+			#{payStatus},
+			#{payType},
+			#{terNo},
+			#{txAmt},
+			#{rate},
+			#{rateType},
+			#{fee},
+			#{netrecamt},
+			#{payChannel},
+			#{payCardNo},
+			#{issnam},
+			#{crdnam},
+			#{paySignPic},
+			#{payDate},
+			#{payOrdTime},
+			#{modifyTime},
+			#{cardMedia},
+			#{serialNo},
+			#{casStatus}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_pay_inf SET 	
+			pay_ord_no = #{payOrdNo},
+			cust_id = #{custId},
+			pay_status = #{payStatus},
+			pay_type = #{payType},
+			ter_no = #{terNo},
+			tx_amt = #{txAmt},
+			rate = #{rate},
+			rate_type = #{rateType},
+			fee = #{fee},
+			netrecamt = #{netrecamt},
+			pay_channel = #{payChannel},
+			pay_card_no = #{payCardNo},
+			issnam = #{issnam},
+			crdnam = #{crdnam},
+			pay_sign_pic = #{paySignPic},
+			pay_date = #{payDate},
+			pay_ord_time = #{payOrdTime},
+			modify_time = #{modifyTime},
+			card_media = #{cardMedia},
+			serial_no = #{serialNo},
+			cas_status = #{casStatus}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_pay_inf
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

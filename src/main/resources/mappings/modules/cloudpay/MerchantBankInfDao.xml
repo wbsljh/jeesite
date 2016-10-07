@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cloudpay.dao.MerchantBankInfDao">
+    
+	<sql id="merchantBankInfColumns">
+		a.id AS "id",
+		a.cust_id AS "custId",
+		a.issno AS "issno",
+		a.issnam AS "issnam",
+		a.province_id AS "province.id",
+		a.city_id AS "city.id",
+		a.cnaps_code AS "cnapsCode",
+		a.card_type AS "cardType",
+		a.card_state AS "cardState",
+		a.card_no AS "cardNo",
+		a.mobile_no AS "mobileNo",
+		a.binding_time AS "bindingTime",
+		a.unbundling_time AS "unbundlingTime",
+		a.bankcard_front AS "bankcardFront",
+		a.bankcard_back AS "bankcardBack",
+		a5.name AS "province.name",
+		a6.name AS "city.name"
+	</sql>
+	
+	<sql id="merchantBankInfJoins">
+		LEFT JOIN sys_area a5 ON a5.id = a.province_id
+		LEFT JOIN sys_area a6 ON a6.id = a.city_id
+	</sql>
+    
+	<select id="get" resultType="MerchantBankInf">
+		SELECT 
+			<include refid="merchantBankInfColumns"/>
+		FROM tb_merchant_bank_inf a
+		<include refid="merchantBankInfJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="MerchantBankInf">
+		SELECT 
+			<include refid="merchantBankInfColumns"/>
+		FROM tb_merchant_bank_inf a
+		<include refid="merchantBankInfJoins"/>
+		<where>
+			
+			<if test="custId != null and custId != ''">
+				AND a.cust_id = #{custId}
+			</if>
+			<if test="beginBindingTime != null and endBindingTime != null and beginBindingTime != '' and endBindingTime != ''">
+				AND a.binding_time BETWEEN #{beginBindingTime} AND #{endBindingTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="MerchantBankInf">
+		SELECT 
+			<include refid="merchantBankInfColumns"/>
+		FROM tb_merchant_bank_inf a
+		<include refid="merchantBankInfJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_merchant_bank_inf(
+			id,
+			cust_id,
+			issno,
+			issnam,
+			province_id,
+			city_id,
+			cnaps_code,
+			card_type,
+			card_state,
+			card_no,
+			mobile_no,
+			binding_time,
+			unbundling_time,
+			bankcard_front,
+			bankcard_back
+		) VALUES (
+			#{id},
+			#{custId},
+			#{issno},
+			#{issnam},
+			#{province.id},
+			#{city.id},
+			#{cnapsCode},
+			#{cardType},
+			#{cardState},
+			#{cardNo},
+			#{mobileNo},
+			#{bindingTime},
+			#{unbundlingTime},
+			#{bankcardFront},
+			#{bankcardBack}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_merchant_bank_inf SET 	
+			cust_id = #{custId},
+			issno = #{issno},
+			issnam = #{issnam},
+			province_id = #{province.id},
+			city_id = #{city.id},
+			cnaps_code = #{cnapsCode},
+			card_type = #{cardType},
+			card_state = #{cardState},
+			card_no = #{cardNo},
+			mobile_no = #{mobileNo},
+			binding_time = #{bindingTime},
+			unbundling_time = #{unbundlingTime},
+			bankcard_front = #{bankcardFront},
+			bankcard_back = #{bankcardBack}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_merchant_bank_inf
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

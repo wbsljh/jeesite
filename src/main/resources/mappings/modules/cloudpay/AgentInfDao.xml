@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cloudpay.dao.AgentInfDao">
+    
+	<sql id="agentInfColumns">
+		a.agent_id AS "agentId",
+		a.login AS "login.id",
+		a.agent_dgr AS "agentDgr",
+		a.fath_agent_id AS "fathAgentId",
+		a.first_agent_id AS "firstAgentId",
+		a.agent_name AS "agentName",
+		a.legal_name AS "legalName",
+		a.legal_identity_no AS "legalIdentityNo",
+		a.lic_no AS "licNo",
+		a.tax_no AS "taxNo",
+		a.address AS "address",
+		a.tel AS "tel",
+		a.moblie_no AS "moblieNo",
+		a.email AS "email",
+		a.froz_state AS "frozState",
+		a.margin AS "margin",
+		a.contract_str_date AS "contractStrDate",
+		a.contract_end_date AS "contractEndDate",
+		a.age_status AS "ageStatus",
+		a.remark AS "remark",
+		a.tech_contact AS "techContact",
+		a.tech_tel_no AS "techTelNo",
+		a.tech_email AS "techEmail",
+		a.tech_mobno AS "techMobno",
+		a.city AS "city.id",
+		a.province AS "province.id",
+		a.biz_contact AS "bizContact",
+		a.biz_mobno AS "bizMobno",
+		a.serv_contact AS "servContact",
+		a.serv_mobno AS "servMobno",
+		a.oem_state AS "oemState",
+		a.settle_type AS "settleType",
+		a.bank_pay_acno AS "bankPayAcno",
+		a.bank_pay_usernm AS "bankPayUsernm",
+		a.bank_code AS "bankCode",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.profit_ratio AS "profitRatio",
+		a.oem_pic_id AS "oemPic",
+		a.opening_license_pic_id AS "openingLicensePic",
+		a.business_license_pic_id AS "businessLicensePic",
+		a.legal_identity_pic_id AS "legalIdentityPic",
+		a.tax_no_pic_id AS "taxNoPic",
+		a.agent_type AS "agentType",
+		a25.name AS "city.name",
+		a26.name AS "province.name"
+	</sql>
+	
+	<sql id="agentInfJoins">
+		LEFT JOIN sys_area a25 ON a25.id = a.city
+		LEFT JOIN sys_area a26 ON a26.id = a.province
+	</sql>
+    
+	<select id="get" resultType="AgentInf">
+		SELECT 
+			<include refid="agentInfColumns"/>
+		FROM tb_agent_inf a
+		<include refid="agentInfJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="AgentInf">
+		SELECT 
+			<include refid="agentInfColumns"/>
+		FROM tb_agent_inf a
+		<include refid="agentInfJoins"/>
+		<where>
+			
+			<if test="agentId != null and agentId != ''">
+				AND a.agent_id = #{agentId}
+			</if>
+			<if test="agentName != null and agentName != ''">
+				AND a.agent_name = #{agentName}
+			</if>
+			<if test="legalName != null and legalName != ''">
+				AND a.legal_name = #{legalName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="AgentInf">
+		SELECT 
+			<include refid="agentInfColumns"/>
+		FROM tb_agent_inf a
+		<include refid="agentInfJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_agent_inf(
+			agent_id,
+			agent_name,
+			legal_name,
+			legal_identity_no,
+			lic_no,
+			tax_no,
+			address,
+			tel,
+			moblie_no,
+			email,
+			froz_state,
+			margin,
+			contract_str_date,
+			contract_end_date,
+			age_status,
+			remark,
+			tech_contact,
+			tech_tel_no,
+			tech_email,
+			tech_mobno,
+			city,
+			province,
+			biz_contact,
+			biz_mobno,
+			serv_contact,
+			serv_mobno,
+			oem_state,
+			settle_type,
+			bank_pay_acno,
+			bank_pay_usernm,
+			bank_code,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			profit_ratio,
+			oem_pic_id,
+			opening_license_pic_id,
+			business_license_pic_id,
+			legal_identity_pic_id,
+			tax_no_pic_id
+		) VALUES (
+			#{agentId},
+			#{agentName},
+			#{legalName},
+			#{legalIdentityNo},
+			#{licNo},
+			#{taxNo},
+			#{address},
+			#{tel},
+			#{moblieNo},
+			#{email},
+			#{frozState},
+			#{margin},
+			#{contractStrDate},
+			#{contractEndDate},
+			#{ageStatus},
+			#{remark},
+			#{techContact},
+			#{techTelNo},
+			#{techEmail},
+			#{techMobno},
+			#{city.id},
+			#{province.id},
+			#{bizContact},
+			#{bizMobno},
+			#{servContact},
+			#{servMobno},
+			#{oemState},
+			#{settleType},
+			#{bankPayAcno},
+			#{bankPayUsernm},
+			#{bankCode},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{profitRatio},
+			#{oemPic},
+			#{openingLicensePic},
+			#{businessLicensePic},
+			#{legalIdentityPic},
+			#{taxNoPic}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_agent_inf SET 	
+			agent_name = #{agentName},
+			legal_name = #{legalName},
+			legal_identity_no = #{legalIdentityNo},
+			lic_no = #{licNo},
+			tax_no = #{taxNo},
+			address = #{address},
+			tel = #{tel},
+			moblie_no = #{moblieNo},
+			email = #{email},
+			froz_state = #{frozState},
+			margin = #{margin},
+			contract_str_date = #{contractStrDate},
+			contract_end_date = #{contractEndDate},
+			age_status = #{ageStatus},
+			remark = #{remark},
+			tech_contact = #{techContact},
+			tech_tel_no = #{techTelNo},
+			tech_email = #{techEmail},
+			tech_mobno = #{techMobno},
+			city = #{city.id},
+			province = #{province.id},
+			biz_contact = #{bizContact},
+			biz_mobno = #{bizMobno},
+			serv_contact = #{servContact},
+			serv_mobno = #{servMobno},
+			oem_state = #{oemState},
+			settle_type = #{settleType},
+			bank_pay_acno = #{bankPayAcno},
+			bank_pay_usernm = #{bankPayUsernm},
+			bank_code = #{bankCode},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			profit_ratio = #{profitRatio},
+			oem_pic_id = #{oemPic},
+			opening_license_pic_id = #{openingLicensePic},
+			business_license_pic_id = #{businessLicensePic},
+			legal_identity_pic_id = #{legalIdentityPic},
+			tax_no_pic_id = #{taxNoPic}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_agent_inf
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

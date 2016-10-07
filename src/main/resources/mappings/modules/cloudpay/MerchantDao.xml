@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cloudpay.dao.MerchantDao">
+    
+	<sql id="merchantColumns">
+		a.id AS "id",
+		a.login AS "login.id",
+		a.cust_name AS "custName",
+		a.cust_type AS "custType",
+		a.certificate_type AS "certificateType",
+		a.certificate_no AS "certificateNo",
+		a.idcard_handheld AS "idcardHandheld",
+		a.idcard_front AS "idcardFront",
+		a.idcard_back AS "idcardBack",
+		a.legal_name AS "legalName",
+		a.lic_no AS "licNo",
+		a.audit_status AS "auditStatus",
+		a.audit_time AS "auditTime",
+		a.tax_no AS "taxNo",
+		a.audit_idea AS "auditIdea",
+		a.address AS "address",
+		a.tel AS "tel",
+		a.audit_id AS "auditor.id",
+		a.moblie_no AS "moblieNo",
+		a.email AS "email",
+		a.reg_datetime AS "regDatetime",
+		a.city_id AS "city.id",
+		a.province_id AS "province.id",
+		a.secret_key AS "secretKey",
+		a.tech_contact AS "techContact",
+		a.agent_id AS "agent.id",
+		a.rate AS "rate",
+		a.tech_email AS "techEmail",
+		a.agent_rate AS "agentRate",
+		a.tech_mobile AS "techMobile",
+		a.biz_contact AS "bizContact",
+		a.biz_mobile AS "bizMobile",
+		a.serv_contact AS "servContact",
+		a.serv_mobile AS "servMobile",
+		a.oem_pic AS "oemPic",
+		a.open_lic_pic AS "openLicPic",
+		a.busi_lic_pic AS "busiLicPic",
+		a.legal_id_pic AS "legalIdPic",
+		a.tax_no_pic AS "taxNoPic",
+		u2.name AS "login.name",
+		a22.name AS "city.name",
+		a23.name AS "province.name",
+		u26.name AS "agent.name"
+	</sql>
+	
+	<sql id="merchantJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.login
+		LEFT JOIN sys_area a22 ON a22.id = a.city_id
+		LEFT JOIN sys_area a23 ON a23.id = a.province_id
+		LEFT JOIN sys_user u26 ON u26.id = a.agent_id
+	</sql>
+    
+	<select id="get" resultType="Merchant">
+		SELECT 
+			<include refid="merchantColumns"/>
+		FROM tb_merchant a
+		<include refid="merchantJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Merchant">
+		SELECT 
+			<include refid="merchantColumns"/>
+		FROM tb_merchant a
+		<include refid="merchantJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="custName != null and custName != ''">
+				AND a.cust_name = #{custName}
+			</if>
+			<if test="custType != null and custType != ''">
+				AND a.cust_type = #{custType}
+			</if>
+			<if test="legalName != null and legalName != ''">
+				AND a.legal_name = #{legalName}
+			</if>
+			<if test="auditStatus != null and auditStatus != ''">
+				AND a.audit_status = #{auditStatus}
+			</if>
+			<if test="beginAuditTime != null and endAuditTime != null and beginAuditTime != '' and endAuditTime != ''">
+				AND a.audit_time BETWEEN #{beginAuditTime} AND #{endAuditTime}
+			</if>
+			<if test="agent != null and agent.id != null and agent.id != ''">
+				AND a.agent_id = #{agent.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Merchant">
+		SELECT 
+			<include refid="merchantColumns"/>
+		FROM tb_merchant a
+		<include refid="merchantJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_merchant(
+			id,
+			login,
+			cust_name,
+			cust_type,
+			certificate_type,
+			certificate_no,
+			idcard_handheld,
+			idcard_front,
+			idcard_back,
+			legal_name,
+			lic_no,
+			audit_status,
+			audit_time,
+			tax_no,
+			audit_idea,
+			address,
+			tel,
+			audit_id,
+			moblie_no,
+			email,
+			reg_datetime,
+			city_id,
+			province_id,
+			secret_key,
+			tech_contact,
+			agent_id,
+			rate,
+			tech_email,
+			agent_rate,
+			tech_mobile,
+			biz_contact,
+			biz_mobile,
+			serv_contact,
+			serv_mobile,
+			oem_pic,
+			open_lic_pic,
+			busi_lic_pic,
+			legal_id_pic,
+			tax_no_pic
+		) VALUES (
+			#{id},
+			#{login.id},
+			#{custName},
+			#{custType},
+			#{certificateType},
+			#{certificateNo},
+			#{idcardHandheld},
+			#{idcardFront},
+			#{idcardBack},
+			#{legalName},
+			#{licNo},
+			#{auditStatus},
+			#{auditTime},
+			#{taxNo},
+			#{auditIdea},
+			#{address},
+			#{tel},
+			#{auditor.id},
+			#{moblieNo},
+			#{email},
+			#{regDatetime},
+			#{city.id},
+			#{province.id},
+			#{secretKey},
+			#{techContact},
+			#{agent.id},
+			#{rate},
+			#{techEmail},
+			#{agentRate},
+			#{techMobile},
+			#{bizContact},
+			#{bizMobile},
+			#{servContact},
+			#{servMobile},
+			#{oemPic},
+			#{openLicPic},
+			#{busiLicPic},
+			#{legalIdPic},
+			#{taxNoPic}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_merchant SET 	
+			login = #{login.id},
+			cust_name = #{custName},
+			cust_type = #{custType},
+			certificate_type = #{certificateType},
+			certificate_no = #{certificateNo},
+			idcard_handheld = #{idcardHandheld},
+			idcard_front = #{idcardFront},
+			idcard_back = #{idcardBack},
+			legal_name = #{legalName},
+			lic_no = #{licNo},
+			audit_status = #{auditStatus},
+			audit_time = #{auditTime},
+			tax_no = #{taxNo},
+			audit_idea = #{auditIdea},
+			address = #{address},
+			tel = #{tel},
+			audit_id = #{auditor.id},
+			moblie_no = #{moblieNo},
+			email = #{email},
+			reg_datetime = #{regDatetime},
+			city_id = #{city.id},
+			province_id = #{province.id},
+			secret_key = #{secretKey},
+			tech_contact = #{techContact},
+			agent_id = #{agent.id},
+			rate = #{rate},
+			tech_email = #{techEmail},
+			agent_rate = #{agentRate},
+			tech_mobile = #{techMobile},
+			biz_contact = #{bizContact},
+			biz_mobile = #{bizMobile},
+			serv_contact = #{servContact},
+			serv_mobile = #{servMobile},
+			oem_pic = #{oemPic},
+			open_lic_pic = #{openLicPic},
+			busi_lic_pic = #{busiLicPic},
+			legal_id_pic = #{legalIdPic},
+			tax_no_pic = #{taxNoPic}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_merchant
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
